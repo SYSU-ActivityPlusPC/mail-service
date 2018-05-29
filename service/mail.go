@@ -12,7 +12,6 @@ func SendMail(send string, to string, content string, sub string) error{
 	// Get receivers and password
 	toArray := strings.Split(to, ";")
 	password := os.Getenv("ADMIN_MAIL_PASS")
-	password = "T3Y2vAX3i1jH"
 	// Set email content
 	m := gomail.NewMessage()
 	m.SetHeader("From", "admin@sysuactivity.com")
@@ -21,6 +20,6 @@ func SendMail(send string, to string, content string, sub string) error{
 	m.SetBody("text/html", content)
 
 	// Dial and send email
-	d := gomail.NewDialer("smtp.exmail.qq.com", 25, "admin@sysuactivity.com", password)
+	d := gomail.NewDialer("smtp.exmail.qq.com", 25, send, password)
 	return d.DialAndSend(m)
 }
