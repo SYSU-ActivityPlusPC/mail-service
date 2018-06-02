@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -8,7 +9,7 @@ import (
 )
 
 // SendMail send mail according to the content
-func SendMail(send string, to string, content string, sub string) error{
+func SendMail(send string, to string, content string, sub string) error {
 	// Get receivers and password
 	toArray := strings.Split(to, ";")
 	password := os.Getenv("ADMIN_MAIL_PASS")
@@ -21,5 +22,10 @@ func SendMail(send string, to string, content string, sub string) error{
 
 	// Dial and send email
 	d := gomail.NewDialer("smtp.exmail.qq.com", 25, send, password)
-	return d.DialAndSend(m)
+	if err := d.DialAndSend(m); err != nil {
+		fmt.Println(err)
+		return err
+	}
+	fmt.Println("成功发送邮件")
+	return nil
 }

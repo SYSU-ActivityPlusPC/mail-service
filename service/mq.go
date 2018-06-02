@@ -39,6 +39,7 @@ func HandleMessage() {
 		fmt.Println(err)
 		return
 	}
+	fmt.Println("Finished connecting to the mq")
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
